@@ -7,6 +7,9 @@ private let camelCaseifyDisallowedChars = camelCaseifyAllowedChars.inverted
 
 public extension String {
     
+    var methodCamelCase: String { camelCaseify.lowercaseFirstLetterString }
+    var classCamelCase: String { camelCaseify.uppercaseFirstLetterString }
+    
     var camelCaseify: String {
         replacingCharacters(fromSet: camelCaseifyDisallowedChars)
             .components(separatedBy: camelCaseifySeparators)
@@ -17,6 +20,11 @@ public extension String {
     var uppercaseFirstLetterString: String {
         guard let firstCharacter = self.first else { return self }
         return String(firstCharacter).uppercased() + String(self.dropFirst())
+    }
+    
+    var lowercaseFirstLetterString: String {
+        guard let firstCharacter = self.first else { return self }
+        return String(firstCharacter).lowercased() + String(self.dropFirst())
     }
     
     var humanReadableString: String {
