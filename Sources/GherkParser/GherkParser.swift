@@ -28,9 +28,6 @@ private extension InnerScenario {
                  scenarioDescription: scenarioDescription,
                  stepDescriptions: stepDescriptions.map { $0.toStep() },
                  index: index,
-                 selectorString: selectorString,
-                 selectorCString: selectorCString,
-                 description: description,
                  isBackground: isBackground)
     }
 }
@@ -64,9 +61,6 @@ public struct Scenario: Equatable {
     public let scenarioDescription: String
     public let stepDescriptions: [Step]
     public let index: Int
-    public let selectorString: String
-    public let selectorCString: UnsafeMutablePointer<Int8>
-    public let description: String
     public let isBackground: Bool
 }
 
