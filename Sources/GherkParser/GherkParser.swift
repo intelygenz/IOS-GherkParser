@@ -14,10 +14,9 @@ private extension InnerFeature {
     func toFeature(_ path: String) -> Feature {
         Feature(path: path,
                 annotations: annotations,
-                featureDescription: featureDescription,
+                description: featureDescription,
                 scenarios: scenarios.map{ $0.toScenario(path, false) },
-                background: background?.toScenario(path, true),
-                description: description)
+                background: background?.toScenario(path, true))
     }
 }
 
@@ -25,7 +24,7 @@ private extension InnerScenario {
     func toScenario(_ featurePath: String, _ isBackground: Bool) -> Scenario {
         Scenario(featurePath: featurePath,
                  annotations: annotations,
-                 scenarioDescription: scenarioDescription,
+                 description: scenarioDescription,
                  stepDescriptions: stepDescriptions.map { $0.toStep() },
                  index: index,
                  isBackground: isBackground)
@@ -49,16 +48,15 @@ public enum ParserError: Error {
 public struct Feature: Equatable {
     public let path: String
     public let annotations: [String]
-    public let featureDescription: String
+    public let description: String
     public let scenarios: [Scenario]
     public let background: Scenario?
-    public let description: String
 }
 
 public struct Scenario: Equatable {
     public let featurePath: String
     public let annotations: [String]
-    public let scenarioDescription: String
+    public let description: String
     public let stepDescriptions: [Step]
     public let index: Int
     public let isBackground: Bool

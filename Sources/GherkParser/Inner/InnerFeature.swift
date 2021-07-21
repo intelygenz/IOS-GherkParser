@@ -6,7 +6,3 @@ struct InnerFeature {
     let scenarios: [InnerScenario]
     let background: InnerScenario?
 }
-
-extension InnerFeature: CustomStringConvertible {
-    var description: String { "<\(type(of: self)) \(self.featureDescription) Background: \(background?.description ?? "No background"). \(self.scenarios.count) scenario(s)>" }
-}
