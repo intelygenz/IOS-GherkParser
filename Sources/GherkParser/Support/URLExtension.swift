@@ -15,17 +15,19 @@ public extension URL {
     }
     
     func files(recursive: Bool, _ filter: (URL) -> Bool) -> [URL] {
-        if isDirectory {
-            return FileManager.default.enumerator(atPath: path)?.map{ self.appending($0 as! String) }
-                .flatMap{ (url: URL) -> [URL] in
-                if recursive && url.isDirectory { return url.files(recursive: recursive, filter)
-                } else { return [url] }
-            }.filter(filter) ?? [URL]()
-        } else if filter(self) {
-            return [self]
-        } else {
-            return [URL]()
+        var list = [URL]()
+        var queue = [URL]()
+        queue.append(self)
+        while !queue.isEmpty {
+            let first = queue.removeFirst()
+            if(first.isDirectory) {
+                let newURLs = FileManager.default.enumerator(atPath: first.path)?.map{ first.appending($0 as! String) } ?? [URL]()
+                queue.append(contentsOf: newURLs)
+            } else if filter(first) {
+                list.append(first)
+            }
         }
+        return Set(list).map{ $0 }
     }
     
     func delete() {
